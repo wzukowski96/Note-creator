@@ -4,18 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Note {
+public class Note extends Auditable{
 
     @GeneratedValue
     @Id
@@ -23,7 +21,10 @@ public class Note {
     private UUID id;
     private String title;
     private String content;
-    private LocalDateTime created;
-    private LocalDateTime modified;
     private boolean deleted = false;
+
+    public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

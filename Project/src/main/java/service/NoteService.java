@@ -1,12 +1,15 @@
 package service;
 
 import dto.NoteDTO;
+import lombok.extern.slf4j.Slf4j;
 import model.Note;
+import org.springframework.stereotype.Service;
 import repositories.NoteRepository;
-
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+@Service
+@Slf4j
 public class NoteService {
 
     private final NoteRepository noteRepository;
@@ -17,9 +20,9 @@ public class NoteService {
 
     @Transactional
     public NoteDTO saveNote(NoteDTO noteDTO) {
-        Note note = new Note();
+        Note note = new Note(noteDTO.getTitle(), noteDTO.getContent());
         Note savedNote = noteRepository.save(note);
-        return new NoteDTO();
+        return new NoteDTO(savedNote.getId(), savedNote.getTitle(), savedNote.getContent());
     }
 
     @Transactional
@@ -36,7 +39,15 @@ public class NoteService {
         return null;
     }
 
-    public void deleteById(UUID id) {
-        noteRepository.deleteById(id);
+    public NoteDTO deleteById(UUID id, NoteDTO noteDTO) {
+
+        Note note = noteRepository.findById(id).orElse(null);
+
+        if(note != null){
+            note.setDeleted(true);
+            note = noteRepository.save(note);
+            return new NoteDTO(note.getId(),note.isDeleted());
+        }
+        return null;
     }
 }
