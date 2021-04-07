@@ -38,8 +38,8 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}")
-    public NoteDTO deletePerson(@PathVariable UUID id, NoteDTO noteDTO) {
-        return noteService.deleteById(id, noteDTO);
+    public NoteDTO deletePerson(@PathVariable UUID id) {
+        return noteService.deleteById(id);
     }
 
 }

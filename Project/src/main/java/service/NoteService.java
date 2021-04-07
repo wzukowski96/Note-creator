@@ -39,7 +39,7 @@ public class NoteService {
         return null;
     }
 
-    public NoteDTO deleteById(UUID id, NoteDTO noteDTO) {
+    public NoteDTO deleteById(UUID id) {
 
         Note note = noteRepository.findById(id).orElse(null);
 
