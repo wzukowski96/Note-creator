@@ -1,6 +1,7 @@
 package wz.project.model;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -12,7 +13,7 @@ public class Auditable {
 
     @CreatedDate
     private OffsetDateTime created;
-    @CreatedDate
+    @LastModifiedDate
     private OffsetDateTime modified;
 
     public OffsetDateTime getCreated() {

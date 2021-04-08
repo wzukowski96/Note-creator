@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import wz.project.model.Auditable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -12,13 +13,9 @@ import java.util.UUID;
 public class NoteDTO extends Auditable {
 
     private UUID id;
-    @NotBlank
-    @NotNull
     private String title;
-    @NotBlank
-    @NotNull
     private String content;
-    private boolean deleted;
+    private int version;
 
     public NoteDTO(UUID id, String title, String content) {
         this.id = id;
@@ -26,9 +23,17 @@ public class NoteDTO extends Auditable {
         this.content = content;
     }
 
-    public NoteDTO(UUID id, boolean deleted) {
+    public NoteDTO(UUID id, String content) {
         this.id = id;
-        this.deleted = deleted;
+        this.content = content;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public UUID getId() {
@@ -55,11 +60,4 @@ public class NoteDTO extends Auditable {
         this.content = content;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }

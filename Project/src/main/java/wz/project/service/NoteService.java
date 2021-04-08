@@ -3,9 +3,9 @@ package wz.project.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import wz.project.dto.NoteDTO;
+import wz.project.errors.NoteNotFoundException;
 import wz.project.model.Note;
 import wz.project.repository.NoteRepository;
-
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -19,7 +19,6 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-
     @Transactional
     public NoteDTO saveNote(NoteDTO noteDTO) {
         Note note = new Note(noteDTO.getTitle(), noteDTO.getContent());
@@ -28,28 +27,27 @@ public class NoteService {
     }
 
     @Transactional
-    public NoteDTO editNote(UUID id, NoteDTO noteDTO) {
+    public NoteDTO findNoteById(UUID id) throws NoteNotFoundException {
+        return noteRepository.findById(id).map(note -> new NoteDTO(
+                note.getId(),note.getTitle(),note.getContent()))
+                .orElseThrow(NoteNotFoundException::new);
+    }
 
-        Note note = noteRepository.findById(id).orElse(null);
+    @Transactional
+    public NoteDTO updateNote(NoteDTO noteDTO) {
+
+        Note note = noteRepository.findByTitle(noteDTO.getTitle());
 
         if(note != null){
-            note.setTitle(noteDTO.getTitle());
             note.setContent(noteDTO.getContent());
+            note.setVersion(note.getVersion()+1);
             note = noteRepository.save(note);
-            return new NoteDTO(note.getId(),note.getTitle(),note.getContent());
+            return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion());
         }
         return null;
     }
 
-    public NoteDTO deleteById(UUID id) {
-
-        Note note = noteRepository.findById(id).orElse(null);
-
-        if(note != null){
-            note.setDeleted(true);
-            note = noteRepository.save(note);
-            return new NoteDTO(note.getId(),note.isDeleted());
-        }
-        return null;
+    public void deleteNote(NoteDTO noteDTO){
+        noteRepository.deleteByTitle(noteDTO.getTitle());
     }
 }
