@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class NoteCreatorApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(com.wz.demo.NoteCreatorApplication.class, args);
+        SpringApplication.run(wz.project.NoteCreatorApplication.class, args);
     }
 
 }
