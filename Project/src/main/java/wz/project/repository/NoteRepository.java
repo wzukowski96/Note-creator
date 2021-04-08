@@ -6,5 +6,4 @@ import java.util.UUID;
 
 public interface NoteRepository extends JpaRepository<Note, UUID> {
     Note findByTitle(String title);
-    Note deleteByTitle(String title);
 }

@@ -47,7 +47,7 @@ public class NoteService {
         return null;
     }
 
-    public void deleteNote(NoteDTO noteDTO){
-        noteRepository.deleteByTitle(noteDTO.getTitle());
+    public void deleteNote(UUID id){
+        noteRepository.deleteById(id);
     }
 }
