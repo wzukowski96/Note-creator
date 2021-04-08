@@ -23,7 +23,7 @@ public class Note extends Auditable{
     private UUID id;
     private String title;
     private String content;
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Note(String title, String content) {
         this.title = title;

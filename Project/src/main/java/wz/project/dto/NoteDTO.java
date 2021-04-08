@@ -1,11 +1,14 @@
 package wz.project.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import wz.project.model.Auditable;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class NoteDTO extends Auditable {
 
     private UUID id;
