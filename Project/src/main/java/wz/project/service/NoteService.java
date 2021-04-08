@@ -3,13 +3,11 @@ package wz.project.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import wz.project.dto.NoteDTO;
-import wz.project.errors.NoteNotFoundException;
 import wz.project.model.ListOfNotes;
 import wz.project.model.Note;
 import wz.project.repository.NoteRepository;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,11 +34,6 @@ public class NoteService {
         return new NoteDTO(savedNote.getId(), savedNote.getTitle(), savedNote.getContent(), savedNote.getVersion());
     }
 
-//    @Transactional
-//    public String getNote(UUID id) throws NoteNotFoundException{
-//        return noteRepository.findById(id).map(note -> new NoteDTO(note.getContent())).orElseThrow(NoteNotFoundException::new);
-//    }
-
     @Transactional
     public String getNote(String title){
         return noteRepository.findByTitle(title).getContent();
@@ -49,9 +42,10 @@ public class NoteService {
 
     @Transactional
     public List<NoteDTO> showAllNotes(){
+
         return noteRepository.findAll().stream().map(note -> new NoteDTO(note.getId(),
-                note.getTitle(),note.getContent(),note.getVersion(),note.isDeleted(),
-                note.getModified(),note.getModified())).collect(Collectors.toList());
+                note.getTitle(),note.getContent(),note.getVersion(),note.getDeleted(),
+                note.getModified(),note.getModified())).filter(s -> s.getDeleted() == 0).collect(Collectors.toList());
     }
 
     @Transactional
@@ -71,7 +65,7 @@ public class NoteService {
             noteRepository.save(note);
 
             return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion(),
-                    note.isDeleted(), note.getCreated(), note.getModified());
+                    note.getDeleted(), note.getCreated(), note.getModified());
         }
         return null;
     }
@@ -80,10 +74,10 @@ public class NoteService {
         Note note = noteRepository.findByTitle(noteDTO.getTitle());
         if(note != null){
             note.setVersion(note.getVersion());
-            note.setDeleted(true);
+            note.setDeleted(1);
             note = noteRepository.save(note);
             return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion(),
-                    note.isDeleted(), note.getCreated(), note.getModified());
+                    note.getDeleted(), note.getCreated(), note.getModified());
         }
         return null;
     }

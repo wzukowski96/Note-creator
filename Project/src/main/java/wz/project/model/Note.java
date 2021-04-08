@@ -33,7 +33,7 @@ public class Note{
     private String title;
     private String content;
     private int version = 1;
-    private boolean deleted;
+    private int deleted;
     @CreatedDate
     private OffsetDateTime created;
     @LastModifiedDate
@@ -50,18 +50,5 @@ public class Note{
     public Note(String title, String content) {
         this.title = title;
         this.content = content;
-    }
-
-    public Note(UUID id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
-
-    public Note(UUID id, String title, String content, int version) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.version = version;
     }
 }

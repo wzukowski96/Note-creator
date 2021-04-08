@@ -15,12 +15,9 @@
         </tr>
         <tr th:each="note : ${notes}">
 
-
             <td>
                 <a th:href="@{${'/notes/' + note.title}}" th:text="${note.title}"></a>
             </td>
-
-
 
         </tr>
     </table>
