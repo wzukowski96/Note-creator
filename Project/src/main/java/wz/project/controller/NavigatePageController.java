@@ -16,8 +16,7 @@ public class NavigatePageController {
         this.noteService = noteService;
     }
 
-
-    @GetMapping("/show")
+    @GetMapping("/")
     public String showAllNotes(Model model){
         model.addAttribute("notes",noteService.showAllNotes());
         return "main_page";

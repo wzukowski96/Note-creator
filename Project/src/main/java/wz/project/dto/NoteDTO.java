@@ -42,6 +42,10 @@ public class NoteDTO{
         this.content = content;
     }
 
+    public NoteDTO(String content) {
+        this.content = content;
+    }
+
     public NoteDTO(UUID id, String content) {
         this.id = id;
         this.content = content;

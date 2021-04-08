@@ -14,7 +14,11 @@
             <th>Title</th>
         </tr>
         <tr th:each="note : ${notes}">
-            <td th:text="${note.title}"></td>
+
+            <td>
+                <a th:href="@{${'/notes/' + note.title}}" th:text="${note.title}"></a>
+            </td>
+
         </tr>
     </table>
     <table class="col2">

@@ -3,11 +3,13 @@ package wz.project.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import wz.project.dto.NoteDTO;
+import wz.project.errors.NoteNotFoundException;
 import wz.project.model.ListOfNotes;
 import wz.project.model.Note;
 import wz.project.repository.NoteRepository;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +35,17 @@ public class NoteService {
 
         return new NoteDTO(savedNote.getId(), savedNote.getTitle(), savedNote.getContent(), savedNote.getVersion());
     }
+
+//    @Transactional
+//    public String getNote(UUID id) throws NoteNotFoundException{
+//        return noteRepository.findById(id).map(note -> new NoteDTO(note.getContent())).orElseThrow(NoteNotFoundException::new);
+//    }
+
+    @Transactional
+    public String getNote(String title){
+        return noteRepository.findByTitle(title).getContent();
+    }
+
 
     @Transactional
     public List<NoteDTO> showAllNotes(){
@@ -62,37 +75,6 @@ public class NoteService {
         }
         return null;
     }
-
-//
-//    @Transactional
-//    public boolean addLikedLocation(LocationDto locationDto, UUID userId) {
-//        Location location = locationService.findByCountryAndCity(locationDto.getCountry(), locationDto.getCity());
-//        AppUser appUser = userRepository.findById(userId).orElseGet(null);
-//
-//        List<Location> list = appUser.getLikedLocations();
-//        log.info("User {} change status liked for location {} to", userId, locationDto.getCity());
-//        changeLocationStatus(locationDto, location, list);
-//
-//        appUser.setLikedLocations(list);
-//        userRepository.save(appUser);
-//
-//        return true;
-//    }
-
-//    private void changeLocationStatus(LocationDto locationDto, Location location, List<Location> list) {
-//        if (location == null) {
-//            location = locationDTOToLocation.apply(locationDto);
-//        }
-//        if (list.contains(location)) {
-//            list.remove(location);
-//            log.info("remove");
-//        } else {
-//            list.add(location);
-//            log.info("add");
-//        }
-//    }
-
-
 
     public NoteDTO deleteNote(NoteDTO noteDTO){
         Note note = noteRepository.findByTitle(noteDTO.getTitle());

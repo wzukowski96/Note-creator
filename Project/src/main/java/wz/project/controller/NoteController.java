@@ -47,7 +47,8 @@ public class NoteController {
         return noteService.deleteNote(noteDTO);
     }
 
-
-
-
+    @GetMapping("/{title}")
+    public String getNote(@PathVariable String title){
+        return noteService.getNote(title);
+    }
 }
