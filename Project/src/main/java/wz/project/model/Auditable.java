@@ -10,7 +10,6 @@ import java.time.OffsetDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable {
-
     @CreatedDate
     private OffsetDateTime created;
     @LastModifiedDate
@@ -23,4 +22,5 @@ public class Auditable {
     public OffsetDateTime getModified() {
         return modified;
     }
+
 }

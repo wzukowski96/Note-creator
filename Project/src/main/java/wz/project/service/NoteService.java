@@ -23,7 +23,7 @@ public class NoteService {
     public NoteDTO saveNote(NoteDTO noteDTO) {
         Note note = new Note(noteDTO.getTitle(), noteDTO.getContent());
         Note savedNote = noteRepository.save(note);
-        return new NoteDTO(savedNote.getId(), savedNote.getTitle(), savedNote.getContent());
+        return new NoteDTO(savedNote.getId(), savedNote.getTitle(), savedNote.getContent(), savedNote.getVersion());
     }
 
     @Transactional
@@ -42,12 +42,21 @@ public class NoteService {
             note.setContent(noteDTO.getContent());
             note.setVersion(note.getVersion()+1);
             note = noteRepository.save(note);
-            return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion());
+            return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion(),
+                    note.isDeleted(), note.getCreated(), note.getModified());
         }
         return null;
     }
 
-    public void deleteNote(UUID id){
-        noteRepository.deleteById(id);
+    public NoteDTO deleteNote(NoteDTO noteDTO){
+        Note note = noteRepository.findByTitle(noteDTO.getTitle());
+        if(note != null){
+            note.setVersion(note.getVersion());
+            note.setDeleted(true);
+            note = noteRepository.save(note);
+            return new NoteDTO(note.getId(),note.getContent(),note.getTitle(), note.getVersion(),
+                    note.isDeleted(), note.getCreated(), note.getModified());
+        }
+        return null;
     }
 }

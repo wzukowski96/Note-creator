@@ -46,9 +46,9 @@ public class NoteController {
         return noteService.updateNote(noteDTO);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteNoteById(@PathVariable UUID id){
-        noteService.deleteNote(id);
+    @PutMapping("/delete")
+    public NoteDTO deleteNote(@RequestBody NoteDTO noteDTO){
+        return noteService.deleteNote(noteDTO);
     }
 
 }
