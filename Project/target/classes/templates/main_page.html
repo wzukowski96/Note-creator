@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head>
+    <link rel="stylesheet" href="/style.css"/>
         <meta charset="UTF-8">
         <title>Login</title>
-    </head>
+
 </head>
 <body>
 
-<div>
-    <table style="float: left">
+<div class="container">
+    <table class="col">
         <tr>
             <th>Title</th>
         </tr>
@@ -17,7 +17,7 @@
             <td th:text="${note.title}"></td>
         </tr>
     </table>
-    <table style="float: left">
+    <table class="col2">
         <tr>
             <th>Created</th>
         </tr>
@@ -25,7 +25,7 @@
             <td th:text="${note.created}"></td>
         </tr>
     </table>
-    <table style="float: left">
+    <table class="col3">
         <tr>
             <th>Modified</th>
         </tr>
