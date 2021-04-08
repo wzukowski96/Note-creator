@@ -19,7 +19,7 @@ The following guides illustrate how to use some features concretely:
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 * [Handling Form Submission](https://spring.io/guides/gs/handling-form-submission/)
-* [Producing a SOAP web service](https://spring.io/guides/gs/producing-web-service/)
+* [Producing a SOAP web com.wz.demo.service](https://spring.io/guides/gs/producing-web-service/)
 * [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/)
 * [Managing Transactions](https://spring.io/guides/gs/managing-transactions/)
 * [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/basics)
