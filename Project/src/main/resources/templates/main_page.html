@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+    </head>
+</head>
+<body>
+
+<div>
+    <table style="float: left">
+        <tr>
+            <th>Title</th>
+        </tr>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.title}"></td>
+        </tr>
+    </table>
+    <table style="float: left">
+        <tr>
+            <th>Created</th>
+        </tr>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.created}"></td>
+        </tr>
+    </table>
+    <table style="float: left">
+        <tr>
+            <th>Modified</th>
+        </tr>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.modified}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -3,6 +3,7 @@ package wz.project.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +37,6 @@ public class NoteController {
         return noteService.saveNote(noteDTO);
     }
 
-//    @GetMapping("/{id}")
-//    public NoteDTO findNoteById(@PathVariable UUID id) {
-//        return noteService.findNoteById(id);
-//    }
-
     @PutMapping("/update")
     public NoteDTO updateNote(@RequestBody NoteDTO noteDTO){
         return noteService.updateNote(noteDTO);
@@ -50,5 +46,8 @@ public class NoteController {
     public NoteDTO deleteNote(@RequestBody NoteDTO noteDTO){
         return noteService.deleteNote(noteDTO);
     }
+
+
+
 
 }
