@@ -27,7 +27,7 @@ public class NoteController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+  //  @ResponseStatus(HttpStatus.CREATED)
     public NoteDTO saveNote(@RequestBody NoteDTO noteDTO){
         return noteService.saveNote(noteDTO);
     }
