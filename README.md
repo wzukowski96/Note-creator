@@ -12,14 +12,14 @@ Tools used in the project:
 -Git
 -HTML/CSS
 -Thymeleaf
--MySQL
+-PostGreSQL
 
 I've used Java 15 in the project, but Java 11 is enough.
-MySQL database is run using Docker container.
+PostgreSQL database is run using Docker container.
 
 How to run the project:
-1. In the console/terminal type: docker run -p 0.0.0.0:3306:3306 --name notesdb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=notesdb -d mysql
-2. Open database interface of your own and create a connection. Essential data for the connection: user: root, password: root, database: notesdb
+1. In the console/terminal type: docker run --name postgresql-container -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+2. Open database interface of your own and create a connection. Essential data for the connection: user: postgres, password: postgres, database: postgres
 3. After cloning the repository, in your IDE open the folder as a project clicking on the pom.xml file.(Built by Maven)
 4. To make sure everything is up to date Build the project using in IntelliJ shortcut Ctrl + F9.
 5. Run the Spring boot application in a chosen environment. For example in my IntelliJ IDEA to run the application you can use the shortcut Shift + F10
