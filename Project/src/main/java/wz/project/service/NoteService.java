@@ -43,9 +43,11 @@ public class NoteService {
     @Transactional
     public List<NoteDTO> showAllNotes(){
 
-        return noteRepository.findAll().stream().map(note -> new NoteDTO(note.getId(),
+        return noteRepository.findAllByDeletedEqualsOrderByTitleAsc(0).stream()
+                .map(note -> new NoteDTO(note.getId(),
                 note.getTitle(),note.getContent(),note.getVersion(),note.getDeleted(),
-                note.getModified(),note.getModified())).filter(s -> s.getDeleted() == 0).collect(Collectors.toList());
+                note.getModified(),note.getModified()))
+                .filter(s -> s.getDeleted() == 0).collect(Collectors.toList());
     }
 
     @Transactional
