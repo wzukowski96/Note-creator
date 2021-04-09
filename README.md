@@ -49,6 +49,7 @@ URL: http://localhost:8080/notes/delete
 {
     "title": "hi"
 } 
+5. To see the history of the note particular note, go to http://localhost:8080/notes/history/[name_of_the_note].
 
 
 
