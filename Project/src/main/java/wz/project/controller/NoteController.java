@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import wz.project.dto.NoteDTO;
 import wz.project.service.NoteService;
 
+import javax.validation.Valid;
+
 @RestController
 @Slf4j
 @RequestMapping("/notes")
@@ -25,12 +27,12 @@ public class NoteController {
     }
 
     @PostMapping("/create")
-    public NoteDTO saveNote(@RequestBody NoteDTO noteDTO){
+    public NoteDTO saveNote(@RequestBody @Valid NoteDTO noteDTO){
         return noteService.saveNote(noteDTO);
     }
 
     @PutMapping("/update")
-    public NoteDTO updateNote(@RequestBody NoteDTO noteDTO){
+    public NoteDTO updateNote(@RequestBody @Valid NoteDTO noteDTO){
         return noteService.updateNote(noteDTO);
     }
 

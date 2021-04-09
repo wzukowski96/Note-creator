@@ -25,7 +25,7 @@ public class NoteService {
         Note note = new Note(noteDTO.getTitle(), noteDTO.getContent());
 
         ListOfNotes listOfNotes = new ListOfNotes();
-        List<Note> list = listOfNotes.getNotes();
+        List<Note> list = noteRepository.findAll();
         list.add(note);
         listOfNotes.setNotes(list);
 
@@ -58,7 +58,7 @@ public class NoteService {
             note.setContent(noteDTO.getContent());
             note.setVersion(note.getVersion()+1);
 
-            List<Note> list = listOfNotes.getNotes();
+            List<Note> list = noteRepository.findAll();
             list.add(note);
             listOfNotes.setNotes(list);
 

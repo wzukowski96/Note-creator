@@ -17,7 +17,11 @@ import java.util.UUID;
 public class NoteDTO{
 
     private UUID id;
+    @NotBlank
+    @NotNull
     private String title;
+    @NotBlank
+    @NotNull
     private String content;
     private int version = 1;
     private int deleted;

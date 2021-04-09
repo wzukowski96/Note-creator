@@ -10,7 +10,7 @@ public class ErrorHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoteNotFoundException.class)
-    public void addressNotFoundException() {
+    public void noteNotFoundException() {
 
     }
 
