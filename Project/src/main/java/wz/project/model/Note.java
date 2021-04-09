@@ -15,7 +15,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -27,8 +26,7 @@ public class Note{
 
     @GeneratedValue
     @Id
-    @Type(type="org.hibernate.type.UUIDCharType")
-    private UUID id;
+    private long id;
     private String title;
     private String content;
     private int version = 1;

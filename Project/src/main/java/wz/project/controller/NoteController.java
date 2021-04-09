@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wz.project.dto.NoteDTO;
+import wz.project.model.NoteHistory;
 import wz.project.service.NoteService;
-
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -43,6 +44,11 @@ public class NoteController {
 
     @GetMapping("/{title}")
     public String getNote(@PathVariable String title){
-        return noteService.getNote(title);
+        return noteService.getNoteContent(title);
+    }
+
+    @GetMapping("/history/{title}")
+    public List<NoteHistory> getNoteHistory(@PathVariable String title){
+        return noteService.getNoteHistory(title);
     }
 }

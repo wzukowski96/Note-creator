@@ -1,14 +1,20 @@
 package wz.project.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import wz.project.dto.NoteDTO;
 import wz.project.model.ListOfNotes;
 import wz.project.model.Note;
+import wz.project.model.NoteHistory;
 import wz.project.repository.NoteRepository;
 import javax.transaction.Transactional;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +27,9 @@ public class NoteService {
     public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Transactional
     public NoteDTO saveNote(NoteDTO noteDTO) {
@@ -36,9 +45,33 @@ public class NoteService {
     }
 
     @Transactional
-    public String getNote(String title){
+    public String getNoteContent(String title){
         return noteRepository.findByTitle(title).getContent();
     }
+
+    @Transactional
+    public List<NoteHistory> getNoteHistory(String title){
+
+        List<NoteHistory> historyList = this.jdbcTemplate.query(
+                "select * from note_aud where title = ?",
+                new Object[]{title},
+                new RowMapper<NoteHistory>() {
+                    public NoteHistory mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        NoteHistory noteHistory = new NoteHistory();
+                        noteHistory.setId(rs.getLong("id"));
+                        noteHistory.setRev(rs.getInt("rev"));
+                        noteHistory.setRevtype(rs.getInt("revtype"));
+                        noteHistory.setTitle(rs.getString("title"));
+                        noteHistory.setContent(rs.getString("content"));
+                        noteHistory.setCreated(rs.getTimestamp("created").toLocalDateTime());
+                        noteHistory.setModified(rs.getTimestamp("modified").toLocalDateTime());
+                        noteHistory.setVersion(rs.getInt("version"));
+
+                        return noteHistory;
+                    }
+                });
+            return historyList;
+}
 
     @Transactional
     public List<NoteDTO> showAllNotes(){

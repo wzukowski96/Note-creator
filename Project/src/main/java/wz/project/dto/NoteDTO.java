@@ -9,14 +9,13 @@ import javax.persistence.EntityListeners;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class NoteDTO{
 
-    private UUID id;
+    private long id;
     @NotBlank
     @NotNull
     private String title;
@@ -38,7 +37,7 @@ public class NoteDTO{
         return modified;
     }
 
-    public NoteDTO(UUID id, String title, String content, int version) {
+    public NoteDTO(Long id, String title, String content, int version) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -53,11 +52,11 @@ public class NoteDTO{
         this.version = version;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
