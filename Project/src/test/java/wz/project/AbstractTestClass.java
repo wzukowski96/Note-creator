@@ -1,4 +1,4 @@
-package com.wz.demo.integrationtests;
+package wz.project;
 
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,13 +11,11 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(initializers = AbstractNoteIntegrationTest.DockerPostgreDataSourceInitializer.class)
+@ContextConfiguration(initializers = AbstractTestClass.DockerPostgreDataSourceInitializer.class)
 @Testcontainers
-public abstract class AbstractNoteIntegrationTest {
-
-
+public abstract class AbstractTestClass {
     public static PostgreSQLContainer<?> postgreDBContainer = new PostgreSQLContainer<>("postgresql-container");
 
     static {
@@ -35,8 +33,6 @@ public abstract class AbstractNoteIntegrationTest {
                     "spring.datasource.username=" + postgreDBContainer.getUsername(),
                     "spring.datasource.password=" + postgreDBContainer.getPassword()
             );
-  //          postgreDBContainer.withInitScript("db/setup.sql");
         }
     }
-
 }

@@ -1,50 +1,32 @@
-package com.wz.demo.integrationtests;
+package wz.project;
 
-import io.restassured.RestAssured;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import wz.project.dto.NoteDTO;
-
 import static io.restassured.RestAssured.with;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @AutoConfigureMockMvc
-class NoteIntegrationTest extends AbstractNoteIntegrationTest {
+class NoteCreatorApplicationTests extends AbstractTestClass {
 
-  //  @Autowired
- //   ObjectMapper objectMapper;
-
-    @LocalServerPort
-    int port;
-
-    @BeforeEach
-    public void before() {
-        RestAssured.port = port;
-    }
-
-    @BeforeAll
-    public static void init() {
-        RestAssured.baseURI = "http://localhost";
-    }
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
-    void checkIfNoteWasCreatedWithTitleAndContent() {
+    void shouldCreateNewNoteWithTitleAndContent() {
 
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setTitle("Hi");
-        noteDTO.setContent("Peter");
+        noteDTO.setTitle("Hello");
+        noteDTO.setContent("world");
 
         Response response = with().body(noteDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().post("/notes");
+                .when().post("/notes/create");
 
         Assertions.assertEquals(200, response.statusCode());
 
@@ -58,49 +40,46 @@ class NoteIntegrationTest extends AbstractNoteIntegrationTest {
     }
 
     @Test
-    void checkIfContentOfNoteWasUpdated(){
+    void shouldUpdateTheNoteWithDifferentContent() {
 
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setTitle("Hi");
-        noteDTO.setContent("Peter");
+        noteDTO.setTitle("Hello");
+        noteDTO.setContent("world");
 
         Response response = with().body(noteDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().put("/notes");
+                .when().put("/notes/update");
 
         Assertions.assertEquals(200, response.statusCode());
 
         try {
             NoteDTO result = response.body().as(NoteDTO.class);
-            Assertions.assertEquals(noteDTO.getTitle(), result.getTitle());
-            Assertions.assertNotEquals(noteDTO.getContent(),result.getContent());
+            Assertions.assertNotEquals(noteDTO.getContent(), result.getContent());
         } catch (Exception e) {
             fail(e);
         }
-
     }
 
     @Test
-    void checkIfNoteWasSuccessfullyDeleted(){
+    void shouldDeleteTheNoteAndChangeDeletedVariable() {
 
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setTitle("Hi");
-        noteDTO.setContent("Peter");
+        noteDTO.setTitle("Hello");
+        noteDTO.setContent("world");
+        noteDTO.setDeleted(0);
 
         Response response = with().body(noteDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().put("/notes");
+                .when().put("/notes/delete");
 
         Assertions.assertEquals(200, response.statusCode());
 
         try {
             NoteDTO result = response.body().as(NoteDTO.class);
-            Assertions.assertEquals(noteDTO.getDeleted(), result.getDeleted());
+            Assertions.assertNotEquals(noteDTO.getDeleted(), result.getDeleted());
         } catch (Exception e) {
             fail(e);
         }
-
     }
-
-
 }
+
